@@ -19,6 +19,7 @@ import {
 } from '../../constants.js';
 import tokensLoad from '../../store/token/token.thunks';
 import * as messageActions from '../../store/message/message.actions';
+import { flushToken } from '../../store/token/token.actions';
 
 let nf3;
 
@@ -30,6 +31,7 @@ function Login({
   onLoadTokens,
   onNewError,
   onClearMsg,
+  onFlushTokens,
 }) {
   const [modalEnable, setModalEnable] = React.useState(false);
 
@@ -84,6 +86,9 @@ function Login({
   };
 
   const preloadTokens = async () => {
+    const nf3Env = Nf3.Environment.getCurrentEnvironment().currentEnvironment;
+    // Don't preload tokens if working on mainnet or testnet
+    if (nf3Env.chainId < 4) return null;
     const erc20Address = await nf3.getContractAddress('ERC20Mock');
     const erc721Address = await nf3.getContractAddress('ERC721Mock');
     const erc1155Address = await nf3.getContractAddress('ERC1155Mock');
@@ -114,6 +119,7 @@ function Login({
       onLoadWallet(nf3);
       const tokenPool = Storage.tokensGet(nf3.zkpKeys.compressedPkd);
       // TODO Remove at some point (we dont need prloaded tokens)
+      onFlushTokens();
       const tokenPreload = await preloadTokens();
       onLoadTokens(tokenPool || tokenPreload);
     } catch (err) {
@@ -192,6 +198,7 @@ Login.propTypes = {
   onLoadTokens: PropTypes.func.isRequired,
   onNewError: PropTypes.func.isRequired,
   onClearMsg: PropTypes.func.isRequired,
+  onFlushTokens: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -205,6 +212,7 @@ const mapDispatchToProps = dispatch => ({
   onLoadTokens: newTokens => dispatch(tokensLoad(newTokens)),
   onNewError: errorMsg => dispatch(messageActions.newError(errorMsg)),
   onClearMsg: () => dispatch(messageActions.clearMsg()),
+  onFlushTokens: () => dispatch(flushToken()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

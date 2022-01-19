@@ -111,6 +111,12 @@ function tokenReducer(state = initialState, action) {
           : state.detailedErc1155,
       };
 
+    case tokenActionTypes.TOKEN_FLUSH:
+      return {
+        ...state,
+        tokenPool: [],
+      };
+
     default:
       return state;
   }

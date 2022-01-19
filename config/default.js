@@ -127,4 +127,5 @@ module.exports = {
     U: BigInt(5), // non square in Fp
   },
   MAX_QUEUE: 5,
+  NERC721: 35,
 };

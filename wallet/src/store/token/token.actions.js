@@ -4,6 +4,7 @@ export const tokenActionTypes = {
   TOKEN_DELETE: 'TOKEN_DELETE',
   TOKEN_SELECT: 'TOKEN_SELECT',
   TOKEN_UNSELECT: 'TOKEN_UNSELECT',
+  TOKEN_FLUSH: 'TOKEN_FLUSH',
 };
 
 export function addToken(compressedPkd, tokenInfo) {
@@ -34,5 +35,11 @@ export function unselectToken(removeFromDisplayedDetails) {
   return {
     type: tokenActionTypes.TOKEN_UNSELECT,
     payload: { removeFromDisplayedDetails },
+  };
+}
+
+export function flushToken() {
+  return {
+    type: tokenActionTypes.TOKEN_FLUSH,
   };
 }

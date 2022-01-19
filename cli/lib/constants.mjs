@@ -25,9 +25,9 @@ export const ENVIRONMENTS = {
   ropsten: {
     name: 'Ropsten',
     chainId: 3,
-    clientApiUrl: 'https://client1.testnet.nightfall3.com',
-    optimistApiUrl: 'https://optimist1.testnet.nightfall3.com',
-    optimistWsUrl: 'wss://optimist1-ws.testnet.nightfall3.com',
+    clientApiUrl: 'https://client2.testnet.nightfall3.com',
+    optimistApiUrl: 'https://optimist2.testnet.nightfall3.com',
+    optimistWsUrl: 'wss://optimist2-ws.testnet.nightfall3.com',
   },
   rinkeby: {
     name: 'Rinkeby',
