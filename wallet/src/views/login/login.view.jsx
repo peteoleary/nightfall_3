@@ -58,7 +58,7 @@ function Login({
 
   const initNf3 = async ethereumSigningKey => {
     const nf3Env = Nf3.Environment.getCurrentEnvironment().currentEnvironment;
-    nf3 = new Nf3.Nf3(nf3Env.web3WsUrl, ethereumSigningKey, nf3Env);
+    nf3 = new Nf3.Nf3(process.env.REACT_APP_WEB3_URL, ethereumSigningKey, nf3Env);
     // Start NF3
     try {
       await nf3.init();

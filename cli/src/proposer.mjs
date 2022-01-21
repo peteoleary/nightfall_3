@@ -18,6 +18,7 @@ const ethereumSigningKey = program.opts().key || defaultKey;
 
 const argv = yargs(hideBin(process.argv)).parse();
 const { environment } = argv;
+
 /**
 Does the preliminary setup and starts listening on the websocket
 @param {string} testEnvironment - Environment where propose is launched ('Testnet','Localhost','Docker')

@@ -28,11 +28,11 @@
     "web3": "^1.6.0"
   },
   "scripts": {
-    "start": "REACT_APP_ENVIRONMENT=Localhost craco start",
-    "start:docker": "REACT_APP_ENVIRONMENT=Docker PORT=3010 craco start",
-    "start:ropsten": "REACT_APP_ENVIRONMENT=Ropsten craco start",
-    "build": "REACT_APP_ENVIRONMENT=Ropsten craco build",
-    "deploy": "npm run build && aws s3 sync build/ s3://nightfallv3-wallet --cache-control max-age=172800 --delete && aws configure set preview.cloudfront true && aws cloudfront create-invalidation --distribution-id E9K9C7N0TG7LG --paths \"/*\"",
+    "start": "REACT_APP_ENVIRONMENT=Localhost REACT_APP_WEB3_URL=ws://localhost:8546 craco start",
+    "start:docker": "REACT_APP_ENVIRONMENT=Docker  REACT_APP_WEB3_URL=ws://blockchain1:8546 PORT=3010 craco start",
+    "start:ropsten": "if [ -z ${REACT_APP_WEB3_URL} ]; then echo 'Undefined WEB3_URL'; exit; else REACT_APP_ENVIRONMENT=Ropsten craco start; fi",
+    "build": "REACT_APP_ENVIRONMENT=Ropsten craco build; fi",
+    "deploy": "if [ -z ${REACT_APP_WEB3_URL} ]; then echo 'Undefined WEB3_URL'; exit 0; else npm run build && aws s3 sync build/ s3://nightfallv3-wallet --cache-control max-age=172800 --delete && aws configure set preview.cloudfront true && aws cloudfront create-invalidation --distribution-id E9K9C7N0TG7LG --paths \"/*\"; fi",
     "test": "craco test --env=jsdom",
     "eject": "craco eject"
   },

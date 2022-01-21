@@ -155,6 +155,29 @@ More information can be found [here](https://github.com/EYBlockchain/nightfall_3
 - `Chain ID`: 1337
 5. Select the new imported account and the new created network
 
+### Deploy to testnet
+To deploy wallet to Ropsten testnet, type:
+```
+REACT_APP_WEB3_URL=wss://web3-socket.tesnet.io npm run deploy
+```
+where `wss://web3-socket-testnet.io` is the URL to a socket connection to a Web3 node. When deploying to testnet, `REACT_APP_WEB3_URL` must be defined.
+
+Deploying will build a production wallet environment and deploy it to AWS S3. Testnet wallet is accessible at `https://wallet.testnet.nightfal3.com`
+
+By default, wallet uses the following configuration to access the different services:
+```
+Client API URL = 'https://client1.testnet.nightfall3.com'
+Optimist API URL = 'https://optimist1.testnet.nightfall3.com'
+Optimist WebSocket URL = 'wss://optimist1-ws.testnet.nightfall3.com'
+```
+
+To change the location of these services, create a `.env.local` file on wallet root folder and add the new URLs:
+```
+REACT_APP_CLIENT_API_URL='https://client2.testnet.nightfall3.com'
+REACT_APP_OPTIMIST_API_URL='https://optimist2.testnet.nightfall3.com'
+REACT_APP_OPTIMIST_WS_URL='wss://optimist2-ws.testnet.nightfall3.com'
+```
+
 
 
 ### Limitations

@@ -6,15 +6,15 @@ const SUPPORTED_ENVIRONMENTS = {
     clientApiUrl: '',
     optimistApiUrl: '',
     optimistWsUrl: '',
-    web3WsUrl: '',
   },
   ropsten: {
     name: 'Ropsten',
     chainId: 3,
-    clientApiUrl: 'https://client2.testnet.nightfall3.com',
-    optimistApiUrl: 'https://optimist2.testnet.nightfall3.com',
-    optimistWsUrl: 'wss://optimist2-ws.testnet.nightfall3.com',
-    web3WsUrl: 'wss://ropsten1-ws.testnet.nightfall3.com',
+    clientApiUrl: process.env.REACT_APP_CLIENT_API_URL || 'https://client1.testnet.nightfall3.com',
+    optimistApiUrl:
+      process.env.REACT_APP_OPTIMIST_API_URL || 'https://optimist1.testnet.nightfall3.com',
+    optimistWsUrl:
+      process.env.REACT_APP_OPTIMIST_WS_URL || 'wss://optimist1-ws.testnet.nightfall3.com',
   },
   rinkeby: {
     name: 'Rinkeby',
@@ -22,7 +22,6 @@ const SUPPORTED_ENVIRONMENTS = {
     clientApiUrl: '',
     optimistApiUrl: '',
     optimistWsUrl: '',
-    web3WsUrl: '',
   },
   localhost: {
     name: 'Localhost',
@@ -30,7 +29,6 @@ const SUPPORTED_ENVIRONMENTS = {
     clientApiUrl: 'http://localhost:8080',
     optimistApiUrl: 'http://localhost:8081',
     optimistWsUrl: 'ws://localhost:8082',
-    web3WsUrl: 'ws://localhost:8546',
   },
   docker: {
     name: 'Docker',
@@ -38,7 +36,6 @@ const SUPPORTED_ENVIRONMENTS = {
     clientApiUrl: 'http://client1',
     optimistApiUrl: 'http://optimist1',
     optimistWsUrl: 'ws://optimist1:8080',
-    web3WsUrl: 'ws://blockchain1:8546',
   },
 };
 
