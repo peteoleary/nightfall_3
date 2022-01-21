@@ -45,14 +45,18 @@ async function startProvider(testEnvironment) {
   const erc20Address = await nf3.getContractAddress('ERC20Mock');
 
   // Aprove ERC20 contract
-  await approve(
+  const tx = await approve(
     erc20Address,
     nf3.ethereumAddress,
     nf3.shieldContractAddress,
     TOKEN_TYPE.ERC20,
     APPROVE_AMOUNT,
     nf3.web3,
+    true,
   );
+  if (tx) {
+    nf3.submitTransaction(tx, erc20Address, 0);
+  }
 
   // set up a listener to service requests for an instant withdrawal
   const emitter = await nf3.getInstantWithdrawalRequestedEmitter();
