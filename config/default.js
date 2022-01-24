@@ -128,4 +128,5 @@ module.exports = {
   },
   MAX_QUEUE: 5,
   NERC721: 35,
+  DEPLOY_ERC_TOKENS: process.env.DEPLOY_ERC_TOKENS !== false,
 };
