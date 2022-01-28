@@ -31,8 +31,10 @@ async function startProposer(testEnvironment) {
   } else {
     setEnvironment('Localhost');
   }
+
+  const web3WsUrl = process.env.WEB3_WS_URL;
   const nf3Env = getCurrentEnvironment().currentEnvironment;
-  const nf3 = new Nf3(nf3Env.web3WsUrl, ethereumSigningKey, nf3Env);
+  const nf3 = new Nf3(web3WsUrl, ethereumSigningKey, nf3Env);
 
   await nf3.init(defaultMnemonic);
   if (await nf3.healthcheck('optimist')) console.log('Healthcheck passed');
