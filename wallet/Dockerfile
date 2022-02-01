@@ -45,21 +45,24 @@ RUN curl -sL https://bootstrap.pypa.io/get-pip.py |  python3
 RUN pip -V
 
 # Chrome Driver
-RUN BROWSER_MAJOR=$(google-chrome --version | sed 's/Google Chrome \([0-9]*\).*/\1/g') && \
+#RUN BROWSER_MAJOR=$(google-chrome --version | sed 's/Google Chrome \([0-9]*\).*/\1/g') && \
+RUN BROWSER_MAJOR=96 && \
     mkdir -p /opt/selenium && \
     wget https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${BROWSER_MAJOR} -O chrome_version && \
     cat chrome_version && \
     wget https://chromedriver.storage.googleapis.com/`cat chrome_version`/chromedriver_linux64.zip -O /opt/selenium/chromedriver_linux64.zip && \
     cd /opt/selenium; unzip /opt/selenium/chromedriver_linux64.zip; rm -rf chromedriver_linux64.zip; ln -fs /opt/selenium/chromedriver /src/test/drivers/chromedriver; cd - && \
     DRIVER_MAJOR=$(/opt/selenium/chromedriver --version | sed 's/ChromeDriver \([0-9]*\).*/\1/g') && \
+    apt install -y /src/test/drivers/chrome.deb --allow-downgrades && rm -f /src/test/drivers/chrome.deb && \
     echo "chrome version: $BROWSER_MAJOR" && \
     echo "chromedriver version: $DRIVER_MAJOR" && \
     if [ $BROWSER_MAJOR != $DRIVER_MAJOR ]; then echo "VERSION MISMATCH"; exit 1; fi
 
 # Metamask plugin
-RUN   ID=nkbihfbeogaeaoehlefnkodbefgpgknn && CHROME_VERSION=$(cat chrome_version) && \
-      URL="https://clients2.google.com/service/update2/crx?response=redirect&prodversion=$CHROME_VERSION&acceptformat=crx2,crx3&x=id%3D$ID%26uc" && \
-      curl -L "$URL" > /src/test/extensions/metamask.crx
+#RUN   ID=nkbihfbeogaeaoehlefnkodbefgpgknn && CHROME_VERSION=$(cat chrome_version) && \
+      #URL="https://clients2.google.com/service/update2/crx?response=redirect&prodversion=$CHROME_VERSION&acceptformat=crx2,crx3&x=id%3D$ID%26uc" && \
+      #curl -L "$URL" > /src/test/extensions/metamask.crx
+COPY test/extensions/metamask.crx   /src/test/extensions/metamask.crx
 
 # Install python dependencies
 RUN pip install setuptools pip --upgrade --force-reinstall

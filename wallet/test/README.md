@@ -35,7 +35,7 @@ Right click mouse on `vnc viewer` screen, `Applications -> Shells -> Bash`
 
 7. Launch Selenium tests
 ```
-cd test && pyhon3 wallet_test.py docker
+cd test && pyhon3 wallet_test.py docker new-wallet
 ```
 
 

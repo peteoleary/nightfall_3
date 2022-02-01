@@ -10,6 +10,7 @@ main() {
     create_tmux ${SESSION} 
 
     # Start wallet
+    sleep 300
     tmux select-pane -t 0
     tmux send-keys "npm run start:docker" Enter
     # if VNC is enabled, start server
@@ -18,11 +19,11 @@ main() {
       launch_window_manager
       run_vnc_server
     fi
+    wait_wallet
+    wait_contracts
     # Start selenium tests (after ganache has started and app has been deployed)
     if [ ${RUN_SELENIUM_TESTS} -eq 1 ]; then
       # Give some time to contracts to deploy
-      sleep 300
-      wait_ready
       tmux select-pane -t 1
       tmux send-keys "node  ../cli/src/proposer.mjs --environment Docker" Enter
       tmux select-pane -t 2
@@ -62,7 +63,7 @@ wait_tests_done() {
 
 }
 
-wait_ready() {
+wait_wallet() {
   app_deployed=$(curl http://wallet-test:3010 2> /dev/null | grep favicon)
   while [ -z "${app_deployed}" ]; do
     echo "Waiting for wallet to be deployed"
@@ -70,6 +71,8 @@ wait_ready() {
     app_deployed=$(curl http://wallet-test:3010 2> /dev/null | grep favicon)
   done
   echo "Wallet deployed"
+}
+wait_contracts() {  
   #wscommand='{"jsonrpc":  "2.0", "id": 0, "method":  "eth_blockNumber"}'
   #block=0
   #while [ ! -z "${block}" ] && [ "${block}" -lt 36 ]; do
