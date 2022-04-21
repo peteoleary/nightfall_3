@@ -14,7 +14,7 @@ import Lottie from 'lottie-react';
 import { UserContext } from '../../hooks/User';
 import maticImg from '../../assets/img/polygon-chain.svg';
 import { retrieveAndDecrypt } from '../../utils/lib/key-storage';
-import { storeTxObject } from '../../utils/lib/local-storage';
+import { storeTxObject, removeTxObject } from '../../utils/lib/local-storage';
 import approveImg from '../../assets/img/modalImages/adeposit_approve1.png';
 import depositConfirmed from '../../assets/img/modalImages/adeposit_confirmed.png';
 import successHand from '../../assets/img/modalImages/success-hand.png';
@@ -450,6 +450,7 @@ const SendModal = (props: SendModalProps): JSX.Element => {
               { transaction: readyTx.transaction },
               { timeout: 3600000 },
             )
+            .then(() => removeTxObject(readyTx.transaction))
             .catch(err => {
               throw new Error(err);
             });

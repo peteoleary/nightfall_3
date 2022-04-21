@@ -33,7 +33,7 @@ import checkMarkCross from '../../assets/lottie/check-mark-cross.json';
 
 import ERC20 from '../../contract-abis/ERC20.json';
 import { retrieveAndDecrypt } from '../../utils/lib/key-storage';
-import { storeRawTx, storeTxObject } from '../../utils/lib/local-storage';
+import { storeRawTx, removeRawTx, storeTxObject, removeTxObject } from '../../utils/lib/local-storage';
 import BigFloat from '../../common-files/classes/bigFloat';
 import { shieldAddressGet } from '../../utils/lib/local-storage';
 
@@ -193,6 +193,7 @@ const BridgeComponent = () => {
       switch (readyTx.type) {
         case 'onchain':
           await submitTransaction(readyTx.rawTransaction, shieldContractAddress, 150000, 0); // 150k is enough gasLimit for a deposit
+          removeRawTx(readyTx.rawTransaction);
           break;
         case 'offchain':
           await axios
@@ -201,6 +202,7 @@ const BridgeComponent = () => {
               { transaction: readyTx.transaction },
               { timeout: 3600000 },
             )
+            .then(() => removeTxObject(readyTx.transaction))
             .catch(err => {
               throw new Error(err);
             });
