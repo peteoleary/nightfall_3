@@ -159,7 +159,6 @@ export default function Assets({ tokenList }) {
   const [modalShow, setModalShow] = useState(false);
   const [showSendModal, setShowSendModal] = useState(false);
 
-  console.log(tokenList);
   const tokenDepositId = `TokenItem_tokenDeposit${tokenList[0].symbol}`;
   const total = tokenList.reduce(
     (acc, curr) =>
