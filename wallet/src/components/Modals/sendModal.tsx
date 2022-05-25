@@ -14,7 +14,7 @@ import Lottie from 'lottie-react';
 import { UserContext } from '../../hooks/User';
 import maticImg from '../../assets/img/polygon-chain.svg';
 import { retrieveAndDecrypt } from '../../utils/lib/key-storage';
-import { storeTxObject, removeTxObject } from '../../utils/lib/local-storage';
+import { storeTxObject, removeTxObject, shieldAddressGet } from '../../utils/lib/local-storage';
 import approveImg from '../../assets/img/modalImages/adeposit_approve1.png';
 import depositConfirmed from '../../assets/img/modalImages/adeposit_confirmed.png';
 import successHand from '../../assets/img/modalImages/success-hand.png';
@@ -23,7 +23,6 @@ import BigFloat from '../../common-files/classes/bigFloat';
 import checkMarkYes from '../../assets/lottie/check-mark-yes.json';
 import Transaction from '../../common-files/classes/transaction';
 import checkMarkCross from '../../assets/lottie/check-mark-cross.json';
-import { shieldAddressGet } from '../../utils/lib/local-storage';
 
 const supportedTokens = importTokens();
 
