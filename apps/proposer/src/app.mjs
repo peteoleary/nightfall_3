@@ -42,4 +42,5 @@ app.listen(PROPOSER_PORT);
 
 startProposer(nf3);
 
+/* ignore unused exports */
 export default app;
