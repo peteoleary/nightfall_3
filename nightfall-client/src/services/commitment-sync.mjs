@@ -1,5 +1,5 @@
 /**
-commitmentsync services to decrypt commitments from transaction blockproposed events 
+commitmentsync services to decrypt commitments from transaction blockproposed events
 or use clientCommitmentSync to decrypt when new ivk is received.
 */
 
@@ -34,13 +34,15 @@ export async function decryptCommitment(transaction, ivk, nsk) {
       logger.info("This encrypted message isn't for this recipient");
     }
   });
-  await Promise.all(storeCommitments).catch(function (err) {
-    logger.info(err);
-  });
+
+  if (storeCommitments.length === 0) {
+    throw Error("This encrypted message isn't for any of recipients");
+  }
+  return Promise.all(storeCommitments);
 }
 
 /**
-Called when new ivk(s) are recieved , it fetches all available commitments 
+Called when new ivk(s) are recieved , it fetches all available commitments
 from commitments collection and decrypts commitments belonging to the new ivk(s).
 */
 export async function clientCommitmentSync(ivk, nsk) {
