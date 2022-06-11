@@ -111,6 +111,9 @@ class Nf3 {
     */
   async init(mnemonic, contractAddressProvider) {
     await this.setWeb3Provider();
+    logger.debug(
+      `Initialising NF3 with mnemonic: ${mnemonic} and contractAddressProvider: ${contractAddressProvider}`,
+    );
     // this code will call client to get contract addresses, or optimist if client isn't deployed
     switch (contractAddressProvider) {
       case undefined:
@@ -125,6 +128,7 @@ class Nf3 {
       default:
         throw new Error('Unknown contract address server');
     }
+    logger.debug(`Using this.contractGetter: ${contractAddressProvider}`);
     // once we know where to ask, we can get the contract addresses
     this.shieldContractAddress = await this.contractGetter('Shield');
     this.proposersContractAddress = await this.contractGetter('Proposers');
@@ -696,7 +700,10 @@ class Nf3 {
     @returns {Promise} A promise that resolves to the Ethereum transaction receipt.
     */
   async registerProposer(url) {
-    const res = await axios.post(`${this.optimistBaseUrl}/proposer/register`, {
+    const resUrl = `${this.optimistBaseUrl}/proposer/register`;
+    logger.debug(`register proposer ${resUrl}`);
+
+    const res = await axios.post(resUrl, {
       address: this.ethereumAddress,
       url,
     });
@@ -877,6 +884,7 @@ class Nf3 {
     @async
     */
   async startProposer() {
+    console.log(`Starting Proposer with address ${this.optimistWsUrl}`);
     const blockProposeEmitter = new EventEmitter();
     const connection = new ReconnectingWebSocket(this.optimistWsUrl, [], { WebSocket });
     this.websockets.push(connection); // save so we can close it properly later
@@ -916,7 +924,7 @@ class Nf3 {
       }
       return null;
     };
-    connection.onerror = () => logger.error('websocket connection error');
+    connection.onerror = () => logger.error(`websocket connection error ${this.optimistWsUrl}`);
     connection.onclosed = () => logger.warn('websocket connection closed');
     // add this proposer to the list of peers that can accept direct transfers and withdraws
     return blockProposeEmitter;
@@ -984,6 +992,9 @@ class Nf3 {
     @return {Promise} A promise that resolves to an axios response.
     */
   async registerChallenger() {
+    console.log(
+      `Registering challenger ${this.optimistBaseUrl}/challenger/add address ${this.ethereumAddress}`,
+    );
     return axios.post(`${this.optimistBaseUrl}/challenger/add`, { address: this.ethereumAddress });
   }
 

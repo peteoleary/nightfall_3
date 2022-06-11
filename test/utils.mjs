@@ -7,7 +7,10 @@ import rand from '../common-files/utils/crypto/crypto-random.mjs';
 
 const { expect } = chai;
 const { WEB3_PROVIDER_OPTIONS } = config;
+
 const ENVIRONMENT = config.ENVIRONMENTS[process.env.ENVIRONMENT] || config.ENVIRONMENTS.localhost;
+
+console.log(`in utils.mjs ENVIRONMENT=${JSON.stringify(ENVIRONMENT)}`);
 
 const USE_ROPSTEN_NODE = config.USE_ROPSTEN_NODE === 'true';
 

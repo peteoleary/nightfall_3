@@ -175,10 +175,10 @@ module.exports = {
     aws: {
       name: 'AWS',
       clientApiUrl: `http://${process.env.CLIENT_HOST}:${process.env.CLIENT_PORT}`,
-      optimistApiUrl: `https://${process.env.OPTIMIST_HTTP_HOST}`,
-      optimistWsUrl: `wss://${process.env.OPTIMIST_HOST}`,
-      proposerBaseUrl: `https://${process.env.PROPOSER_HOST}`,
-      web3WsUrl: `wss://${process.env.BLOCKCHAIN_WS_HOST}`,
+      optimistApiUrl: `http://${process.env.OPTIMIST_HTTP_HOST}:${process.env.OPTIMIST_HTTP_PORT}`,
+      optimistWsUrl: `wss://${process.env.OPTIMIST_HOST}:${process.env.OPTIMIST_WS_PORT}`,
+      proposerBaseUrl: `http://${process.env.PROPOSER_HOST}:${process.env.PROPOSER_PORT}`,
+      web3WsUrl: `wss://${process.env.BLOCKCHAIN_WS_HOST}:${process.env.BLOCKCHAIN_PORT}`,
     },
   },
   TEST_OPTIONS: {

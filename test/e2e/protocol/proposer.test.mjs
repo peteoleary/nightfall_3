@@ -7,12 +7,14 @@ import Nf3 from '../../../cli/lib/nf3.mjs';
 import logger from '../../../common-files/utils/logger.mjs';
 import { Web3Client, expectTransaction } from '../../utils.mjs';
 
+const environment = config.ENVIRONMENTS[process.env.ENVIRONMENT] || config.ENVIRONMENTS.localhost;
+
+console.log(`proposer.test.mjs environment: ${JSON.stringify(environment, null, 2)}`);
+
 // so we can use require with mjs file
 const { expect } = chai;
 chai.use(chaiHttp);
 chai.use(chaiAsPromised);
-
-const environment = config.ENVIRONMENTS[process.env.ENVIRONMENT] || config.ENVIRONMENTS.localhost;
 
 const {
   // txPerBlock,
